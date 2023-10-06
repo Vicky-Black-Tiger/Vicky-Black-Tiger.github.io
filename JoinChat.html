@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Chat Room</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Additional styles for the room link container */
+        #roomLinkContainer {
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        #roomLink {
+            font-weight: bold;
+            color: #007BFF;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Join Chat Room</h2>
+        <form id="joinForm">
+            <label for="userName">Username:</label>
+            <input type="text" id="userName" placeholder="Enter your username" required>
+            <button type="submit">Next</button>
+        </form>
+
+        <div id="roomLinkContainer">
+            <p>Your chat room link:</p>
+            <p id="roomLink"></p>
+            <button id="joinRoomButton">Join Room</button>
+        </div>
+    </div>
+
+    <script>
+        const storedEmail = localStorage.getItem('userEmail');
+        if (storedEmail) {
+            const usernameInput = document.getElementById('userName');
+            usernameInput.value = storedEmail.split('@')[0]; // Set the username up to the "@" symbol
+        }
+        document.getElementById('joinForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const userName = document.getElementById('userName').value;
+
+            // Generate a random room code or use your own logic
+            const roomCode = generateRandomCode(); // Implement this function to generate a unique code.
+
+            // Create the room link
+            const roomLink = `https://yourwebsite.com/chatroom/${roomCode}`;
+
+            // Display the room link and "Join Room" button
+            document.getElementById('roomLink').textContent = roomLink;
+            document.getElementById('roomLinkContainer').style.display = 'block';
+
+            // Optionally, handle the "Join Room" button click event
+            document.getElementById('joinRoomButton').addEventListener('click', function() {
+                window.location.href = 'Room.html'; // Redirect the user to the chat room
+            });
+        });
+        
+
+        function generateRandomCode() {
+            // Implement your logic to generate a random code here
+            const now = new Date();
+            const code = now.getFullYear() +
+                String(now.getMonth() + 1).padStart(2, '0') +
+                String(now.getDate()).padStart(2, '0') +
+                String(now.getHours()).padStart(2, '0') +
+                String(now.getMinutes()).padStart(2, '0') +
+                String(now.getSeconds()).padStart(2, '0');
+
+            return code;
+        }
+        const socket = new WebSocket('ws://yourwebsocketserver.com');
+    </script>
+</body>
+</html>

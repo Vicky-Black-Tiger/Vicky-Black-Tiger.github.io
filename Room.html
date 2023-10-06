@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        /* Additional styles for the chat room elements */
+        #usersJoined {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #usersJoined p {
+            font-weight: bold;
+        }
+
+        #startChatButton {
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #startChatButton:hover {
+            background-color: #0056b3;
+        }
+
+        #chatBox {
+            display: none;
+            margin-top: 20px;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        #messageArea {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        #messageInput {
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            width: 100%;
+        }
+
+        #sendMessageButton {
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #sendMessageButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Chat Room</h2>
+        <div id="usersJoined">
+            <p><span id="user1">User1</span> and <span id="user2">User2</span> joined the chat room</p>
+            <button id="startChatButton">Start Chat</button>
+        </div>
+        <div id="chatBox">
+            <h3>Chat:</h3>
+            <div id="messageArea"></div>
+            <input type="text" id="messageInput" placeholder="Enter your message">
+            <button id="sendMessageButton">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const user1 = "User1";
+        const user2 = "User2";
+
+        document.getElementById('startChatButton').addEventListener('click', function() {
+            document.getElementById('usersJoined').style.display = 'none';
+            document.getElementById('chatBox').style.display = 'block';
+        });
+
+        const messagesDiv = document.getElementById('messages');
+        const messageInput = document.getElementById('messageInput');
+        const sendMessageButton = document.getElementById('sendMessageButton');
+
+        sendMessageButton.addEventListener('click', function() {
+            const message = messageInput.value;
+            appendMessage('You', message); // Display User 1's message
+            // Send the message to User 2 (in a real application, this would involve more complex logic)
+            simulateUser2ReceivingMessage(message);
+            messageInput.value = '';
+        });
+
+        // Simulate User 2 receiving a message (you can replace this with actual logic)
+        function simulateUser2ReceivingMessage(message) {
+            setTimeout(function() {
+                appendMessage('User 2', message); // Display User 2's received message
+            }, 1000); // Simulate a delay
+        }
+
+        function appendMessage(user, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = `${user}: ${message}`;
+            messagesDiv.appendChild(messageDiv);
+        }
+    </script>
+</body>
+</html>
